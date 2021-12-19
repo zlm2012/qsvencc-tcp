@@ -12,7 +12,8 @@ import (
 )
 
 var opts struct {
-	Listen string `short:"l" long:"listen" description:"addr to listen" default:"192.168.122.1:11111"`
+	Listen  string `short:"l" long:"listen" description:"addr to listen" default:"192.168.122.1:11111"`
+	CmdPath string `short:"c" long:"cmd-path" description:"path to qsvencc" default:"qsvencc"`
 }
 
 type procCtxt struct {
@@ -57,7 +58,7 @@ func execHandler(content []byte, conn *net.TCPConn) {
 	}
 	log.Println("cmd line: ", cmdArgs)
 	cmdArgs = append([]string{"-i", "-", "-o", "-"}, cmdArgs...)
-	qsvCmd := exec.Command("qsvencc", cmdArgs...)
+	qsvCmd := exec.Command(opts.CmdPath, cmdArgs...)
 	pipeId := uuid.New().String()
 	procIdMap[pipeId] = &procCtxt{qsvCmd, false, make(chan interface{})}
 	writeContent, err := qsvencc_tcp.TcpMsgVecEncode(qsvencc_tcp.QTWPipeIdentifier, []byte(pipeId))
