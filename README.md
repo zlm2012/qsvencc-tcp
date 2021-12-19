@@ -4,7 +4,9 @@ This is a tcp wrapper implementation for QSVEncC command from [QSVEnc](https://g
 simply sending the input & args to the server-side, and returning the output to the client
 with progress info printed to stderr.
 
-(C) Lingmo Zhu
+(C) 2021 Lingmo Zhu
+
+日本語は[ここ](./README_ja.md)
 
 ## Usage Scenario Considerable
 
