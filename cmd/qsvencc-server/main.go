@@ -3,8 +3,8 @@ package main
 import (
 	"encoding/json"
 	"github.com/google/uuid"
+	qsvencc_tcp "github.com/zlm2012/qsvencc-tcp"
 	"io"
-	qsvencc_tcp "local.packages/qsvencc-tcp"
 	"log"
 	"net"
 	"os/exec"
