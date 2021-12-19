@@ -3,12 +3,17 @@ package main
 import (
 	"encoding/json"
 	"github.com/google/uuid"
+	"github.com/jessevdk/go-flags"
 	qsvencc_tcp "github.com/zlm2012/qsvencc-tcp"
 	"io"
 	"log"
 	"net"
 	"os/exec"
 )
+
+var opts struct {
+	Listen string `short:"l" long:"listen" description:"addr to listen" default:"192.168.122.1:11111"`
+}
 
 type procCtxt struct {
 	cmd      *exec.Cmd
@@ -19,7 +24,11 @@ type procCtxt struct {
 var procIdMap = map[string]*procCtxt{}
 
 func main() {
-	tcpAddr, err := net.ResolveTCPAddr("tcp", "192.168.122.1:11111")
+	_, err := flags.Parse(&opts)
+	if err != nil {
+		log.Fatalln("failed on parsing flags;", err)
+	}
+	tcpAddr, err := net.ResolveTCPAddr("tcp", opts.Listen)
 	if err != nil {
 		log.Fatal(err)
 	}

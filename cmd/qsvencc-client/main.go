@@ -13,8 +13,9 @@ import (
 )
 
 var opts struct {
-	Input  string `short:"i" long:"input" description:"input file" required:"true"`
-	Output string `short:"o" long:"output" description:"output file" required:"true"`
+	Input      string `short:"i" long:"input" description:"input file" required:"true"`
+	Output     string `short:"o" long:"output" description:"output file" required:"true"`
+	RemoteAddr string `long:"remote-addr" description:"remote addr for wrapper server" default:"192.168.122.1:11111"`
 }
 
 func main() {
@@ -61,7 +62,7 @@ func main() {
 	cmdArgsJson = append(cmdArgsJson, '\n')
 	log.Println("marshaled args: ", string(cmdArgsJson))
 
-	tcpAddr, err := net.ResolveTCPAddr("tcp", "192.168.122.1:11111")
+	tcpAddr, err := net.ResolveTCPAddr("tcp", opts.RemoteAddr)
 	conn, err := net.DialTCP("tcp", nil, tcpAddr)
 	if err != nil {
 		log.Fatalln("failed on calling server; ", err)
